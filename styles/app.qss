@@ -1,0 +1,25 @@
+*{
+    font-family: "Yu Gothic UI";
+}
+
+QPushButton#startButton {
+    font-size: 50px;
+    padding: 20px;
+}
+
+QLabel#mouseHeader, QLabel#leftClickHeader{
+    font-size:30px;
+    font-family: "Segoe Print";
+}
+
+QLabel#mouseUnit {
+    padding-left:10px;
+    font-size: 25px;
+    font-family: "Segoe Print";
+}
+
+QLabel#mouseData, QLabel#leftClickData{
+    font-size: 50px;
+    font-weight: bold;
+    font-family: "Segoe Print";
+}
