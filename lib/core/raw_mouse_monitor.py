@@ -74,7 +74,7 @@ class MouseMonitor(QObject):
         if not self.register_devices(hwnd):
             self.finished.emit()
             return
-        logger.info("window preparation done.")
+        logger.info("Window message handler is ready")
         msg = wts.MSG()
         pmsg = cts.byref(msg)
         while res := cws.GetMessage(pmsg, None, 0, 0):
@@ -83,11 +83,11 @@ class MouseMonitor(QObject):
                 break
             cws.TranslateMessage(pmsg)
             cws.DispatchMessage(pmsg)
-        logger.info("monitoring finished!")
+        logger.info("Monitoring finished!")
         self.finished.emit()
 
     def cancel(self):
-        logger.info("cancelling...")
+        logger.info("Finishing raw input handler")
         # ブロッキングしないようにSendMessageではなくPostMessage
         cts.windll.user32.PostMessageW(self.hwnd, WM_QUIT, 0, 0)
 
@@ -101,7 +101,7 @@ class MouseMonitor(QObject):
         )
 
         if cws.RegisterRawInputDevices(devices, len(usage_ids), cts.sizeof(cws.RawInputDevice)):
-            logger.info("Successfully registered input device(s)!")
+            logger.info("Registered input devices")
             return True
         else:
             log_error_code("RegisterRawInputDevices")

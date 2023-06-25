@@ -1,4 +1,5 @@
 import math
+from logging import getLogger
 
 from PySide6.QtCore import *
 from PySide6.QtGui import *
@@ -7,6 +8,8 @@ from PySide6.QtWidgets import *
 
 from ..core.raw_mouse_monitor import MouseMonitor
 from .frameless_window import FramelessWindow
+
+logger = getLogger(__name__)
 
 
 class MainWindow(FramelessWindow):
@@ -92,4 +95,5 @@ class MainWindow(FramelessWindow):
         if self._worker is not None:
             self._worker.cancel()
             # threadが終了するのを待つ
+            logger.info("Waiting thread to be finished")
             self._thread.wait()
