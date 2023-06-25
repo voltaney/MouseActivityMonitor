@@ -12,6 +12,7 @@ WM_CLOSE = 0x0010
 
 HID_USAGE_PAGE_GENERIC = 0x01
 HID_USAGE_GENERIC_MOUSE = 0x02
+HID_USAGE_GENERIC_KEYBOARD = 0x06
 
 # https://learn.microsoft.com/ja-jp/windows/win32/api/winuser/ns-winuser-rawinputdevice
 RIDEV_INPUTSINK = 0x00000100
@@ -19,8 +20,18 @@ RIDEV_INPUTSINK = 0x00000100
 # https://learn.microsoft.com/ja-jp/windows/win32/api/winuser/nf-winuser-getrawinputdata
 RID_INPUT = 0x10000003
 
-# マウスタイプ
+# マウス
 RIM_TYPEMOUSE = 0
+# マウス状態
+# https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-rawmouse
+MOUSE_LEFT_CLICK_CHANGED_TO_DOWN = 0x0001
+
+# キーボード
+RIM_TYPEKEYBOARD = 1
+# 仮想キーボード
+# https://learn.microsoft.com/ja-jp/windows/win32/inputdev/virtual-key-codes
+VK_SPACE = 0x20
+WM_KEYDOWN = 0x0100
 
 
 logger = getLogger(__name__)
@@ -33,6 +44,7 @@ def log_error_code(api_name: str):
 
 class MouseMonitor(QObject):
     mouseMoved = Signal(int, int)
+    mouseLeftClicked = Signal()
     finished = Signal()
 
     def __init__(self) -> None:
@@ -83,11 +95,12 @@ class MouseMonitor(QObject):
         flags = RIDEV_INPUTSINK
         # RawInputDeviceの配列
         # Ctypesの配列は(obj * len)(obj1,obj2,obj3)
-        devices = (cws.RawInputDevice * 1)(
-            cws.RawInputDevice(HID_USAGE_PAGE_GENERIC, HID_USAGE_GENERIC_MOUSE, flags, hwnd)
+        usage_ids = (HID_USAGE_GENERIC_MOUSE,)
+        devices = (cws.RawInputDevice * len(usage_ids))(
+            *(cws.RawInputDevice(HID_USAGE_PAGE_GENERIC, _id, flags, hwnd) for _id in usage_ids)
         )
 
-        if cws.RegisterRawInputDevices(devices, 1, cts.sizeof(cws.RawInputDevice)):
+        if cws.RegisterRawInputDevices(devices, len(usage_ids), cts.sizeof(cws.RawInputDevice)):
             logger.info("Successfully registered input device(s)!")
             return True
         else:
@@ -114,6 +127,13 @@ class MouseMonitor(QObject):
             if raw.header.dwType == RIM_TYPEMOUSE:
                 data = raw.data.mouse
                 self.mouseMoved.emit(data.lLastX, data.lLastY)
+                if data.ulButtons == MOUSE_LEFT_CLICK_CHANGED_TO_DOWN:
+                    self.mouseLeftClicked.emit()
+            # elif raw.header.dwType == RIM_TYPEKEYBOARD:
+            #     data = raw.data.keyboard
+            #     logger.debug(f"{data.VKey}")
+            #     if data.VKey == VK_SPACE:
+            #         logger.debug(f"SPACEキー")
         return cws.DefWindowProc(hwnd, msg, wparam, lparam)
 
 
