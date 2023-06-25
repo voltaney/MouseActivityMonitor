@@ -41,7 +41,7 @@ class MainWindow(FramelessWindow):
 
         self.stacked_layout = QStackedLayout()
         hbox = QHBoxLayout()
-        self.start_button = QPushButton("start")
+        self.start_button = QPushButton("Start")
         self.start_button.setObjectName("startButton")
         self.start_button.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         self.start_button.clicked.connect(self.start_monitor)

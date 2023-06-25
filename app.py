@@ -36,7 +36,7 @@ if __name__ == "__main__":
         logger.critical("Failed to apply qss styles")
     qsstext = QTextStream(stylefile).readAll()
 
-    qdarktheme.setup_theme(custom_colors={"primary": "#D0BCFF"}, additional_qss=qsstext)
+    qdarktheme.setup_theme(additional_qss=qsstext)
 
     window = MainWindow()
     window.show()
