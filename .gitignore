@@ -1,0 +1,8 @@
+__pycache__/
+.vscode/*
+!.vscode/tasks.json
+
+# qrc comipled file
+*_rc.py
+# logs
+*.log
