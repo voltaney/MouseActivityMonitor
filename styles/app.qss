@@ -2,6 +2,10 @@
     font-family: "Yu Gothic UI";
 }
 
+QLabel{
+    color: #ff904f;
+}
+
 QPushButton#startButton {
     font-size: 50px;
     padding: 20px;
@@ -22,4 +26,5 @@ QLabel#mouseData, QLabel#leftClickData{
     font-size: 60px;
     font-weight: bold;
     font-family: "Segoe Print";
+    padding-bottom:10px;
 }
