@@ -28,6 +28,7 @@ if __name__ == "__main__":
     load_yaml_config(":/config/logger.yaml")
 
     app = QApplication(sys.argv)
+    app.setWindowIcon(QIcon(":/assets/app_icon.png"))
 
     stylefile = QFile(":/styles/app.qss")
 

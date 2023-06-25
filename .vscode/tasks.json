@@ -22,6 +22,29 @@
                 "showReuseMessage": false,
                 "clear": false
             }
+        },
+        {
+            "label": "make-version-file",
+            "type": "shell",
+            "command": "create-version-file",
+            "args": [
+                "version.yaml",
+                "--outfile",
+                "app.version"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "pyinstaller",
+            "args": [
+                "Mouse Activity Monitor.spec"
+            ],
+            "dependsOn": [
+                "make-version-file"
+            ],
+            "problemMatcher": []
         }
     ]
 }

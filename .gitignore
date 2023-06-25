@@ -8,3 +8,8 @@ __pycache__/
 *.log
 # runtime settings
 runtime.ini
+# build
+build/
+dist/
+# version file
+*.version
