@@ -24,6 +24,17 @@
             }
         },
         {
+            "label": "compile-qrc",
+            "type": "shell",
+            "command": "pyside6-rcc",
+            "args": [
+                "app.qrc",
+                "-o",
+                "app_rc.py"
+            ],
+            "problemMatcher": []
+        },
+        {
             "label": "make-version-file",
             "type": "shell",
             "command": "create-version-file",
@@ -42,7 +53,32 @@
                 "Mouse Activity Monitor.spec"
             ],
             "dependsOn": [
-                "make-version-file"
+                "make-version-file",
+                "compile-qrc"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "zip-distfiles",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "zip-dist-files.py"
+            ],
+            "dependsOn": [
+                "build"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "distribute",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "ftp-distribute.py"
+            ],
+            "dependsOn": [
+                "zip-distfiles"
             ],
             "problemMatcher": []
         }
