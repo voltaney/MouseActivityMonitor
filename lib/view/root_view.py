@@ -7,6 +7,7 @@ from PySide6.QtGui import QCloseEvent
 from PySide6.QtWidgets import *
 
 from ..core.raw_mouse_monitor import MouseMonitor
+from ..core.settings import SETTINGS
 from .frameless_window import FramelessWindow
 
 logger = getLogger(__name__)
@@ -66,6 +67,8 @@ class MainWindow(FramelessWindow):
         self._total_move = 0
         self._total_left_clicks = 0
         self._worker = None
+        self._dpi = SETTINGS.MOUSE_DPI
+        logger.info(f"MOUSE DPI: {self._dpi}")
 
     @Slot()
     def start_monitor(self):
@@ -83,10 +86,9 @@ class MainWindow(FramelessWindow):
 
     @Slot()
     def change_mouse_text(self, x, y):
-        dpi = 1600
         dist = math.sqrt(x**2 + y**2)
         self._total_move += dist
-        self._mouse_label.setText("{:,.0f}".format(float(self._total_move) / dpi * 2.54))
+        self._mouse_label.setText("{:,.0f}".format(float(self._total_move) / self._dpi * 2.54))
 
     @Slot()
     def change_mouse_left_click_text(self):

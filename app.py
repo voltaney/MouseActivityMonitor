@@ -7,6 +7,7 @@ from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication
 
 import app_rc
+from lib.core.settings import SETTINGS
 from lib.view.root_view import MainWindow
 from loggerconfig import load_yaml_config
 
@@ -37,6 +38,8 @@ if __name__ == "__main__":
     qsstext = QTextStream(stylefile).readAll()
 
     qdarktheme.setup_theme(additional_qss=qsstext)
+
+    SETTINGS.load_setting_file()
 
     window = MainWindow()
     window.show()
