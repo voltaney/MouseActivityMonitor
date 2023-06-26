@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  php:
+    # image: php:7.4-apache
+    build: ./docker/php
+    volumes:
+      - ./public_html:/var/www/html
+      - ./config/php.ini:/usr/local/etc/php/php.ini
+    ports:
+      - 8000:80
+    container_name: php7.4-ap-rewrite

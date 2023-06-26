@@ -13,3 +13,6 @@ build/
 dist/
 # version file
 *.version
+
+# ftp
+ftp-upload.conf
