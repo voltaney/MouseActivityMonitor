@@ -4,7 +4,7 @@ Monitors and displays mouse activity in real time and with low CPU usage. Mouse 
 
 Download from the [latest release](https://github.com/voltaney/MouseActivityMonitor/releases/latest).
 
-<img src="doc/img/ss1.png" width="40%">
+<img src="doc/img/ss2.png" width="50%">
 
 
 ## How it works
