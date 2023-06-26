@@ -2,7 +2,7 @@ import shutil
 import zipfile
 from pathlib import Path
 
-DIST_PACKAGE_PATH = "dist-php/public_html/dist"
+DIST_PACKAGE_PATH = "dist"
 DIST_PATH = "dist"
 
 Path(DIST_PACKAGE_PATH).mkdir(exist_ok=True)
