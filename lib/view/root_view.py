@@ -16,7 +16,6 @@ logger = getLogger(__name__)
 class MainWindow(FramelessWindow):
     def __init__(self) -> None:
         super().__init__()
-        self.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint)
         info_vbox = QVBoxLayout()
         info_vbox.setSpacing(0)
         self._mouse_label = QLabel("0")
